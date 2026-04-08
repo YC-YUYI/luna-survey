@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUNA SANDALS 2027 銷售人員調查問卷</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f4f0;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  .header {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 32px 0 24px;
+    text-align: center;
+  }
+  .header img-placeholder {
+    display: block;
+  }
+  .header .brand {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .header .subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    color: #bbb;
+  }
+
+  .progress-bar-wrap {
+    background: #333;
+    height: 4px;
+  }
+  .progress-bar {
+    height: 4px;
+    background: #e8632a;
+    transition: width 0.4s ease;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  .step {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+  .step.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .step-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #e8632a;
+    margin-bottom: 8px;
+  }
+  .step-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .step-desc {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  /* Intro card */
+  .intro-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    border-left: 4px solid #e8632a;
+  }
+  .intro-card p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #444;
+  }
+  .intro-card ul {
+    margin-top: 12px;
+    padding-left: 20px;
+  }
+  .intro-card ul li {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+  }
+
+  /* Option buttons */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .option-btn {
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #1a1a1a;
+  }
+  .option-btn:hover {
+    border-color: #e8632a;
+    background: #fff8f5;
+  }
+  .option-btn.selected {
+    border-color: #e8632a;
+    background: #fff3ee;
+    color: #e8632a;
+    font-weight: 600;
+  }
+  .option-btn .check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    transition: all 0.2s;
+  }
+  .option-btn.selected .check {
+    background: #e8632a;
+    border-color: #e8632a;
+    color: #fff;
+  }
+
+  /* Multi-select grid */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .options-grid .option-btn {
+    font-size: 13px;
+    padding: 12px 14px;
+  }
+
+  /* Textarea */
+  .textarea-wrap {
+    margin-bottom: 24px;
+  }
+  textarea {
+    width: 100%;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #1a1a1a;
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  textarea:focus {
+    outline: none;
+    border-color: #e8632a;
+  }
+  textarea::placeholder { color: #bbb; }
+
+  /* Text input */
+  input[type="text"], input[type="number"] {
+    width: 100%;
+    background: #fff;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14px;
+    color: #1a1a1a;
+    font-family: inherit;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  input:focus {
+    outline: none;
+    border-color: #e8632a;
+  }
+
+  /* Slider */
+  .slider-wrap {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .slider-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  input[type="range"] {
+    width: 100%;
+    accent-color: #e8632a;
+    height: 6px;
+    cursor: pointer;
+  }
+  .slider-value {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: #e8632a;
+    margin-top: 12px;
+  }
+  .slider-value span { font-size: 14px; color: #888; font-weight: 400; }
+
+  /* Nav buttons */
+  .nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .btn-next {
+    flex: 1;
+    background: #e8632a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .btn-next:hover { background: #d45520; }
+  .btn-back {
+    background: #fff;
+    color: #666;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 16px 24px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-back:hover { border-color: #aaa; color: #333; }
+
+  /* Result */
+  .result-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .result-icon {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .result-title {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .result-sub {
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .summary {
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .summary h3 {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 16px;
+  }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 16px;
+  }
+  .summary-row:last-child { border-bottom: none; }
+  .summary-q { font-size: 12px; color: #888; flex-shrink: 0; width: 45%; }
+  .summary-a { font-size: 13px; font-weight: 600; text-align: right; }
+
+  .copy-btn {
+    width: 100%;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.2s;
+  }
+  .copy-btn:hover { background: #333; }
+
+  .tag {
+    display: inline-block;
+    background: #fff3ee;
+    color: #e8632a;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 12px;
+    margin: 2px;
+  }
+
+  @media (max-width: 480px) {
+    .options-grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="brand">Free Time Gear × Luna Sandals</div>
+  <h1>2027 季度預測｜銷售人員問卷</h1>
+  <div class="subtitle">協助我們準備更精準的年度備貨計畫</div>
+</div>
+<div class="progress-bar-wrap">
+  <div class="progress-bar" id="progressBar" style="width:0%"></div>
+</div>
+
+<div class="container">
+
+  <!-- Step 0: Intro -->
+  <div class="step active" id="step-0">
+    <div class="intro-card">
+      <p>感謝你撥冗填寫本問卷！</p>
+      <p style="margin-top:12px;">為了準備 LUNA SANDALS 2027 年度備貨預測，我們需要蒐集第一線銷售人員的市場觀察，幫助我們做出更貼近實際需求的採購決策。</p>
+      <ul>
+        <li>🕐 填寫時間約 3–5 分鐘</li>
+        <li>📋 共 7 個問題</li>
+        <li>💬 歡迎留下任何觀察與想法</li>
+      </ul>
+    </div>
+    <div class="nav">
+      <button class="btn-next" onclick="nextStep()">開始填寫 →</button>
+    </div>
+  </div>
+
+  <!-- Step 1: 姓名/門市 -->
+  <div class="step" id="step-1">
+    <div class="step-label">問題 1 / 7</div>
+    <div class="step-title">你的姓名與服務門市</div>
+    <div class="step-desc">讓我們知道是哪位夥伴提供了這份寶貴意見。</div>
+    <input type="text" id="q1_name" placeholder="你的姓名" />
+    <select id="q1_store" style="width:100%;background:#fff;border:2px solid #e0e0e0;border-radius:10px;padding:14px 16px;font-size:14px;color:#1a1a1a;font-family:inherit;margin-bottom:12px;appearance:none;cursor:pointer;transition:border-color 0.2s;" onfocus="this.style.borderColor='#e8632a'" onblur="this.style.borderColor='#e0e0e0'">
+      <option value="">請選擇你的門市</option>
+      <option>台北SOGO忠孝館</option>
+      <option>大葉高島屋</option>
+      <option>天母SOGO</option>
+      <option>新光A11</option>
+      <option>中壢SOGO</option>
+      <option>遠東巨城</option>
+      <option>高雄夢時代</option>
+      <option>中山門市</option>
+      <option>衡陽門市</option>
+      <option>Montura民權門市</option>
+      <option>Icebreaker仁愛門市</option>
+      <option>師大門市</option>
+      <option>信義永康門市</option>
+      <option>長春門市</option>
+      <option>台中美村門市</option>
+    </select>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="nextStep()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Step 2: 最暢銷款式 -->
+  <div class="step" id="step-2">
+    <div class="step-label">問題 2 / 7</div>
+    <div class="step-title">顧客最常詢問或最暢銷的款式是哪些？</div>
+    <div class="step-desc">可複選，選出你觀察到最受歡迎的款式類型。</div>
+    <div class="options" id="q2_options">
+      <button class="option-btn" onclick="toggleMulti(this, 'q2')"><span class="check">✓</span>OSO 越野機能涼鞋（標準款・13mm）</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q2')"><span class="check">✓</span>OSO FLACO 越野機能涼鞋（薄款・7mm）</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q2')"><span class="check">✓</span>MONO 舒適機能涼鞋（標準款・11mm）</button>
+    </div>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="nextStep()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Step 3: 缺貨款式 -->
+  <div class="step" id="step-3">
+    <div class="step-label">問題 3 / 7</div>
+    <div class="step-title">哪些款式或尺碼最常缺貨、造成失單？</div>
+    <div class="step-desc">請描述你觀察到的缺貨情況，包含款式名稱與常缺的尺碼區間。</div>
+    <div class="textarea-wrap">
+      <textarea id="q3" placeholder="例如：Oso 的 EU43–45 很容易缺貨，顧客常常撲空…"></textarea>
+    </div>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="nextStep()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Step 4: 反應冷淡款式 -->
+  <div class="step" id="step-4">
+    <div class="step-label">問題 4 / 7</div>
+    <div class="step-title">哪些款式顧客反應較冷淡或有疑慮？</div>
+    <div class="step-desc">你的觀察有助於我們調整備貨比例。</div>
+    <div class="textarea-wrap">
+      <textarea id="q4" placeholder="例如：某款式售價偏高、顧客覺得款式過時、穿搭難度高…"></textarea>
+    </div>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="nextStep()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Step 5: 需求趨勢 -->
+  <div class="step" id="step-5">
+    <div class="step-label">問題 5 / 7</div>
+    <div class="step-title">你預期 2027 年的整體需求如何？</div>
+    <div class="step-desc">相較於 2026 年，你的直覺判斷是？</div>
+    <div class="options" id="q5_options">
+      <button class="option-btn" onclick="selectSingle(this, 'q5')"><span class="check">✓</span>📈 明顯增加（+20% 以上）</button>
+      <button class="option-btn" onclick="selectSingle(this, 'q5')"><span class="check">✓</span>↗️ 小幅增加（約 +5–20%）</button>
+      <button class="option-btn" onclick="selectSingle(this, 'q5')"><span class="check">✓</span>➡️ 大致持平</button>
+      <button class="option-btn" onclick="selectSingle(this, 'q5')"><span class="check">✓</span>↘️ 小幅減少（約 -5–20%）</button>
+      <button class="option-btn" onclick="selectSingle(this, 'q5')"><span class="check">✓</span>📉 明顯減少（-20% 以上）</button>
+      <button class="option-btn" onclick="selectSingle(this, 'q5')"><span class="check">✓</span>🤷 不確定</button>
+    </div>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="nextStep()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Step 6: 顧客需求缺口 -->
+  <div class="step" id="step-6">
+    <div class="step-label">問題 6 / 7</div>
+    <div class="step-title">顧客有提過想要但我們沒有的款式或功能嗎？</div>
+    <div class="step-desc">例如特定顏色、功能、鞋型，或競品上有但我們沒有的特色。</div>
+    <div class="textarea-wrap">
+      <textarea id="q6" placeholder="例如：有顧客問過全黑配色、有沒有更窄版的楦頭、防水版本…"></textarea>
+    </div>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="nextStep()">下一題 →</button>
+    </div>
+  </div>
+
+  <!-- Step 7: 主要客群 -->
+  <div class="step" id="step-7">
+    <div class="step-label">問題 7 / 7</div>
+    <div class="step-title">你所接觸的顧客，主要是哪些族群？</div>
+    <div class="step-desc">可複選。</div>
+    <div class="options-grid" id="q7_options">
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>🏃 跑者（路跑 / 越野）</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>🥾 健行 / 登山愛好者</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>👟 日常穿搭族</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>🧘 瑜珈 / 赤足運動</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>🌊 水上活動愛好者</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>👨‍👩‍👧 家庭客（親子）</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>✈️ 旅遊 / 背包客</button>
+      <button class="option-btn" onclick="toggleMulti(this, 'q7')"><span class="check">✓</span>其他</button>
+    </div>
+    <div class="nav">
+      <button class="btn-back" onclick="prevStep()">←</button>
+      <button class="btn-next" onclick="submitForm()">提交問卷 ✓</button>
+    </div>
+  </div>
+
+  <!-- Step 8: Result -->
+  <div class="step" id="step-8">
+    <div class="result-card">
+      <div class="result-icon">🎉</div>
+      <div class="result-title">感謝你的填寫！</div>
+      <div class="result-sub">你的意見將幫助我們為 2027 年備貨做出更精準的決策。<br>以下是你的回答摘要。</div>
+    </div>
+
+    <div class="summary">
+      <h3>回答摘要</h3>
+      <div id="summaryContent"></div>
+    </div>
+
+    <button class="copy-btn" onclick="copyResults()">📋 複製回答結果</button>
+  </div>
+
+</div>
+
+<script>
+  let currentStep = 0;
+  const totalSteps = 8;
+  const answers = {};
+
+  function updateProgress() {
+    const pct = (currentStep / (totalSteps - 1)) * 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + n).classList.add('active');
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextStep() {
+    currentStep++;
+    showStep(currentStep);
+  }
+
+  function prevStep() {
+    if (currentStep > 0) {
+      currentStep--;
+      showStep(currentStep);
+    }
+  }
+
+  function selectSingle(btn, key) {
+    const parent = btn.closest('.options, .options-grid');
+    parent.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[key] = btn.textContent.trim().replace('✓', '').trim();
+  }
+
+  function toggleMulti(btn, key) {
+    btn.classList.toggle('selected');
+    const parent = btn.closest('.options, .options-grid');
+    const selected = [...parent.querySelectorAll('.option-btn.selected')]
+      .map(b => b.textContent.trim().replace('✓', '').trim());
+    answers[key] = selected;
+  }
+
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzMep94QKtjRCAVybL_4kZc9_PYQZLHAx5Zu_4QknhtbOw3HSM9E2QBp-cHC7AveDjmQA/exec';
+
+  function submitForm() {
+    answers['q1_name'] = document.getElementById('q1_name').value || '（未填）';
+    answers['q1_store'] = document.getElementById('q1_store').value || '（未填）';
+    answers['q3'] = document.getElementById('q3').value || '（未填）';
+    answers['q4'] = document.getElementById('q4').value || '（未填）';
+    answers['q6'] = document.getElementById('q6').value || '（未填）';
+
+    const summaryData = [
+      { q: '姓名', a: answers['q1_name'] },
+      { q: '門市', a: answers['q1_store'] },
+      { q: '暢銷款式', a: Array.isArray(answers['q2']) ? answers['q2'].join('、') : answers['q2'] || '（未選）' },
+      { q: '缺貨狀況', a: answers['q3'] },
+      { q: '反應冷淡款式', a: answers['q4'] },
+      { q: '2027 需求預測', a: answers['q5'] || '（未選）' },
+      { q: '顧客需求缺口', a: answers['q6'] },
+      { q: '主要客群', a: Array.isArray(answers['q7']) ? answers['q7'].join('、') : answers['q7'] || '（未選）' },
+    ];
+
+    const html = summaryData.map(row => `
+      <div class="summary-row">
+        <div class="summary-q">${row.q}</div>
+        <div class="summary-a">${row.a}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('summaryContent').innerHTML = html;
+
+    // 送出到 Google Sheets
+    const payload = {
+      q1_name: answers['q1_name'],
+      q1_store: answers['q1_store'],
+      q2: Array.isArray(answers['q2']) ? answers['q2'].join('、') : answers['q2'] || '（未選）',
+      q3: answers['q3'],
+      q4: answers['q4'],
+      q5: answers['q5'] || '（未選）',
+      q6: answers['q6'],
+      q7: Array.isArray(answers['q7']) ? answers['q7'].join('、') : answers['q7'] || '（未選）'
+    };
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch(err => console.warn('送出失敗:', err));
+
+    currentStep = 8;
+    showStep(8);
+  }
+
+  function copyResults() {
+    const lines = [
+      '=== LUNA SANDALS 2027 銷售人員問卷回答 ===',
+      `姓名：${answers['q1_name']}`,
+      `門市：${answers['q1_store']}`,
+      `暢銷款式：${Array.isArray(answers['q2']) ? answers['q2'].join('、') : answers['q2'] || '（未選）'}`,
+      `缺貨狀況：${answers['q3']}`,
+      `反應冷淡款式：${answers['q4']}`,
+      `2027 需求預測：${answers['q5'] || '（未選）'}`,
+      `顧客需求缺口：${answers['q6']}`,
+      `主要客群：${Array.isArray(answers['q7']) ? answers['q7'].join('、') : answers['q7'] || '（未選）'}`,
+    ];
+    navigator.clipboard.writeText(lines.join('\n')).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = '✅ 已複製！';
+      setTimeout(() => btn.textContent = '📋 複製回答結果', 2000);
+    });
+  }
+</script>
+</body>
+</html>
